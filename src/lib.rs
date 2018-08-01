@@ -8,6 +8,9 @@
 // option. This file may not be copied, modified, or distributed
 // except according to those terms.
 
+#![feature(rust_2018_preview)]
+#![warn(rust_2018_idioms)]
+
 //! Numeric traits for generic mathematics
 //!
 //! ## Compatibility
@@ -17,31 +20,29 @@
 #![doc(html_root_url = "https://docs.rs/num-traits/0.2")]
 #![deny(unconditional_recursion)]
 #![no_std]
-#[cfg(feature = "std")]
-extern crate std;
 
 use core::fmt;
 use core::num::Wrapping;
 use core::ops::{Add, Div, Mul, Rem, Sub};
 use core::ops::{AddAssign, DivAssign, MulAssign, RemAssign, SubAssign};
 
-pub use bounds::Bounded;
+pub use self::bounds::Bounded;
 #[cfg(feature = "std")]
-pub use float::Float;
-pub use float::FloatConst;
+pub use self::float::Float;
+pub use self::float::FloatConst;
 // pub use real::{FloatCore, Real}; // NOTE: Don't do this, it breaks `use num_traits::*;`.
-pub use cast::{cast, AsPrimitive, FromPrimitive, NumCast, ToPrimitive};
-pub use identities::{one, zero, One, Zero};
-pub use int::PrimInt;
-pub use ops::checked::{
+pub use self::cast::{cast, AsPrimitive, FromPrimitive, NumCast, ToPrimitive};
+pub use self::identities::{one, zero, One, Zero};
+pub use self::int::PrimInt;
+pub use self::ops::checked::{
     CheckedAdd, CheckedDiv, CheckedMul, CheckedNeg, CheckedRem, CheckedShl, CheckedShr, CheckedSub,
 };
-pub use ops::inv::Inv;
-pub use ops::mul_add::{MulAdd, MulAddAssign};
-pub use ops::saturating::Saturating;
-pub use ops::wrapping::{WrappingAdd, WrappingMul, WrappingSub};
-pub use pow::{checked_pow, pow, Pow};
-pub use sign::{abs, abs_sub, signum, Signed, Unsigned};
+pub use self::ops::inv::Inv;
+pub use self::ops::mul_add::{MulAdd, MulAddAssign};
+pub use self::ops::saturating::Saturating;
+pub use self::ops::wrapping::{WrappingAdd, WrappingMul, WrappingSub};
+pub use self::pow::{checked_pow, pow, Pow};
+pub use self::sign::{abs, abs_sub, signum, Signed, Unsigned};
 
 #[macro_use]
 mod macros;
@@ -201,7 +202,7 @@ pub struct ParseFloatError {
 }
 
 impl fmt::Display for ParseFloatError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let description = match self.kind {
             FloatErrorKind::Empty => "cannot parse float from empty string",
             FloatErrorKind::Invalid => "invalid float literal",

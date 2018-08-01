@@ -1,3 +1,5 @@
+cargo-features = ["edition"]
+
 [package]
 authors = ["The Rust Project Developers"]
 description = "Numeric traits for generic mathematics"
@@ -11,6 +13,8 @@ name = "num-traits"
 version = "0.2.5"
 readme = "README.md"
 build = "build.rs"
+edition = "2018"
+publish = false
 
 [package.metadata.docs.rs]
 features = ["std"]
